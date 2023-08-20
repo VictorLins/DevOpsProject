@@ -9,8 +9,8 @@ driver = webdriver.Chrome(service=Service())
 try:
     driver.implicitly_wait(10)
     driver.maximize_window()
-    driver.get("http://127.0.0.1:5001/users/get_user_data/11")
-    user_field = driver.find_elements(By.ID, "user")
+    driver.get("http://127.0.0.1:5001/users/get_user_data/11") # Open the webpage related to the selected user ID
+    user_field = driver.find_elements(By.ID, "user") # Get the field USER
     if len(user_field) == 0:
         print("Field not found")
     else:

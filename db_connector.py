@@ -6,11 +6,6 @@ connection_string_user = 'sandbox_user'
 connection_string_password = 'DefaultPassword123'
 connection_string_schema = "mydb"
 
-
-# Establishing a connection to DB
-
-
-
 #region Getting data from table
 def get_user(user_id):
 	global connection_string_host

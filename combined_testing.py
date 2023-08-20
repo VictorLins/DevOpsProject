@@ -11,7 +11,7 @@ from selenium.webdriver.common.by import By
 try:
     user_id = random.randint(0, 999) #Generate random User Id
     user_name = "User " + str(user_id)  #Define User Name
-    requests.post(f"http://127.0.0.1:5000/users/{user_id}", json={"user_name": f"{user_name}"})
+    requests.post(f"http://127.0.0.1:5000/users/{user_id}", json={"user_name": f"{user_name}"}) #Add user
     get_response = requests.get(f"http://127.0.0.1:5000/users/{user_id}")
     if get_response.ok and get_response.json()['user_name'] == user_name:
         print(f"API TEST: Test Successful | User {user_name} added")

@@ -63,6 +63,7 @@ def user(user_id):
                     data_return = {"status": "error", "reason": user}, 500
     except Exception as e:
         data_return = {"status": "error", "reason": str(e)}, 500
+        raise Exception(str(e))
 
     return data_return
 

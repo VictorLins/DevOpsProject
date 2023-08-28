@@ -16,7 +16,7 @@ try:
     if get_response.ok and get_response.json()['user_name'] == user_name:
         print(f"API TEST: Test Successful | User {user_name} added.")
     else:
-       raise Exception("test failed")
+       raise Exception("API Test failed")
 except Exception as e:
     print(str(e))
 
@@ -38,7 +38,7 @@ try:
         if row[0] == user_id and str(row[1]) == user_name:
             print(f"MYSQL TEST: Test Successful | User: {str(row[1])}")
         else:
-            raise Exception(f"test failed")
+            raise Exception(f"MySQL Test failed - User Not Found")
     cursor.close()
     conn.close()
 except Exception as e:
@@ -55,7 +55,7 @@ try:
     user_field = driver.find_elements(By.ID, "user")
     if len(user_field) == 0:
         print("Field not found")
-        raise Exception(f"test failed")
+        raise Exception(f"Selenium Test failed - Field Not Found")
     else:
         print("SELENIUM TEST: Test Successful | Field Found. Value: ", user_field[0].text)
 except Exception as e:

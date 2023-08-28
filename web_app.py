@@ -26,6 +26,7 @@ def get_user_data(user_id):
 				data_return = f"<h1 id='error'>User {user} not found</h1>",200
 	except Exception as e:
 		data_return = f"<h1 id='error'>An exception has occurred. {str(e)}</h1>",500
+		raise Exception(str(e))
 
 	return data_return
 

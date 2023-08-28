@@ -17,5 +17,6 @@ try:
         print("Field Found. Value: ", user_field[0].text)
 except Exception as e:
     print(str(e))
+    raise Exception(str(e))
 
 exit()

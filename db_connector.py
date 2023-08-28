@@ -25,6 +25,7 @@ def get_user(user_id):
 		conn.close()
 	except Exception as e:
 		data_return = "Error | " + str(e)
+		raise Exception(str(e))
 	return data_return
 #endregion
 
@@ -56,6 +57,7 @@ def add_user(user_name, user_id):
 			data_return = get_user(user_id)
 	except Exception as e:
 		data_return = "Error | " + str(e)
+		raise Exception(str(e))
 	return data_return
 #endregion
 
@@ -82,6 +84,7 @@ def delete_user(user_id):
 			data_return = f"Error | User Id {user_id} not found"
 	except Exception as e:
 		data_return = "Error | " + str(e)
+		raise Exception(str(e))
 	return data_return
 #endregion
 
@@ -108,5 +111,6 @@ def update_user(user_name, user_id):
 			data_return = f"Error | User Id {user_id} not found"
 	except Exception as e:
 		data_return = "Error | " + str(e)
+		raise Exception(str(e))
 	return data_return
 #endregion

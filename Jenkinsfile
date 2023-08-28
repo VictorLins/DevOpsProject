@@ -10,24 +10,34 @@ pipeline {
             }
         }
         stage('Start APIs ') {
+			when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
             steps {
                 script {
                     if (checkOs() == 'Windows') {
-                        bat 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe rest_app.py'
-						bat 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe web_app.py'
-                    } else {
-                        print("Not Windows")
-                    }
+						def scriptOutput = bat(
+							script: 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe rest_app.py',
+							script: 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe web_app.py',
+							returnStatus: true
+						)
+						if (scriptOutput != 0) {
+							currentBuild.result = 'FAILURE'
+						}
+					}
                 }
             }
         }
-		
+
 		stage('Backend Test ') {
+			when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
             steps {
                 script {
-				
+
 					def scriptOutput = bat(
-                        script: 'C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe backend_testing.py',
+                        script: 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe backend_testing.py',
                         returnStatus: true
                     )
                     if (scriptOutput != 0) {
@@ -36,29 +46,36 @@ pipeline {
                 }
             }
         }
-		
+
 		stage('Frontend Test ') {
 			when {
                 expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
             }
             steps {
                 script {
-                    if (checkOs() == 'Windows') {
-                        bat 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe frontend_testing.py'
-                    } else {
-                        print("Not Windows")
+					def scriptOutput = bat(
+                        script: 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe frontend_testing.py',
+                        returnStatus: true
+                    )
+                    if (scriptOutput != 0) {
+                        currentBuild.result = 'FAILURE'
                     }
                 }
             }
         }
-		
+
 		stage('Combined Test ') {
+			when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
             steps {
                 script {
-                    if (checkOs() == 'Windows') {
-                        bat 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe combined_testing.py'
-                    } else {
-                        print("Not Windows")
+					def scriptOutput = bat(
+                        script: 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe combined_testing.py',
+                        returnStatus: true
+                    )
+                    if (scriptOutput != 0) {
+                        currentBuild.result = 'FAILURE'
                     }
                 }
             }

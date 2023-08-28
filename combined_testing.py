@@ -14,7 +14,7 @@ try:
     requests.post(f"http://127.0.0.1:5000/users/{user_id}", json={"user_name": f"{user_name}"}) #Add user
     get_response = requests.get(f"http://127.0.0.1:5000/users/{user_id}")
     if get_response.ok and get_response.json()['user_name'] == user_name:
-        print(f"API TEST: Test Successful | User {user_name} added")
+        print(f"API TEST: Test Successful | User {user_name} added.")
     else:
        raise Exception("test failed")
 except Exception as e:

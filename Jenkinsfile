@@ -1,21 +1,70 @@
 pipeline {
     agent any
     stages {
-        stage('checkout') {
+        stage('Checkout') {
             steps {
                 script {
                     properties([pipelineTriggers([pollSCM('* * * * *')])])
                 }
-                git 'https://github.com/VictorLins/DevOpsSandBox.git'
+                git 'https://github.com/VictorLins/DevOpsProject.git'
             }
         }
-        stage('run python') {
+        stage('Start APIs ') {
             steps {
                 script {
                     if (checkOs() == 'Windows') {
-                        bat 'C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe First.py'
+                        bat 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe rest_app.py'
+						bat 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe web_app.py'
                     } else {
-                        bat 'C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe First.py'
+                        print("Not Windows")
+                    }
+                }
+            }
+        }
+		
+		stage('Backend Test ') {
+            steps {
+                script {
+                    if (checkOs() == 'Windows') {
+                        bat 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe backend_testing.py'
+                    } else {
+                        print("Not Windows")
+                    }
+                }
+            }
+        }
+		
+		stage('Frontend Test ') {
+            steps {
+                script {
+                    if (checkOs() == 'Windows') {
+                        bat 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe frontend_testing.py'
+                    } else {
+                        print("Not Windows")
+                    }
+                }
+            }
+        }
+		
+		stage('Combined Test ') {
+            steps {
+                script {
+                    if (checkOs() == 'Windows') {
+                        bat 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe combined_testing.py'
+                    } else {
+                        print("Not Windows")
+                    }
+                }
+            }
+        }
+		
+		stage('Clean Environment ') {
+            steps {
+                script {
+                    if (checkOs() == 'Windows') {
+                        bat 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe clean_environment.py'
+                    } else {
+                        print("Not Windows")
                     }
                 }
             }

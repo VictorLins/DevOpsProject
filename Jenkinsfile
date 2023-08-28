@@ -25,16 +25,22 @@ pipeline {
 		stage('Backend Test ') {
             steps {
                 script {
-                    if (checkOs() == 'Windows') {
-                        bat 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe backend_testing.py'
-                    } else {
-                        print("Not Windows")
+				
+					def scriptOutput = bat(
+                        script: 'C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe backend_testing.py',
+                        returnStatus: true
+                    )
+                    if (scriptOutput != 0) {
+                        currentBuild.result = 'FAILURE'
                     }
                 }
             }
         }
 		
 		stage('Frontend Test ') {
+			when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
             steps {
                 script {
                     if (checkOs() == 'Windows') {

@@ -4,7 +4,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    properties([pipelineTriggers([pollSCM('* * * * *')])])
+                    properties([pipelineTriggers([pollSCM('*/30 * * * *')])])
                 }
                 git 'https://github.com/VictorLins/DevOpsProject.git'
             }
@@ -17,13 +17,12 @@ pipeline {
                 script {
                     if (checkOs() == 'Windows') {
 						def scriptOutput1 = bat(
-							script: 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe rest_app.py',
+							script: 'C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe rest_app.py',
 							returnStatus: true
 						)
 
-
 						def scriptOutput2 = bat(
-							script: 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe web_app.py',
+							script: 'C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe web_app.py',
 							returnStatus: true
 						)
 
@@ -43,7 +42,7 @@ pipeline {
                 script {
 
 					def scriptOutput = bat(
-                        script: 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe backend_testing.py',
+                        script: 'C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe backend_testing.py',
                         returnStatus: true
                     )
                     if (scriptOutput != 0) {
@@ -60,7 +59,7 @@ pipeline {
             steps {
                 script {
 					def scriptOutput = bat(
-                        script: 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe frontend_testing.py',
+                        script: 'C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe frontend_testing.py',
                         returnStatus: true
                     )
                     if (scriptOutput != 0) {
@@ -77,7 +76,7 @@ pipeline {
             steps {
                 script {
 					def scriptOutput = bat(
-                        script: 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe combined_testing.py',
+                        script: 'C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe combined_testing.py',
                         returnStatus: true
                     )
                     if (scriptOutput != 0) {
@@ -86,12 +85,12 @@ pipeline {
                 }
             }
         }
-		
+
 		stage('Clean Environment ') {
             steps {
                 script {
                     if (checkOs() == 'Windows') {
-                        bat 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe clean_environment.py'
+                        bat 'C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe clean_environment.py'
                     } else {
                         print("Not Windows")
                     }

@@ -1,10 +1,17 @@
 from flask import Flask, request
 from rest_app import get_user
+import os
+import signal
 app = Flask(__name__)
 
 @app.route("/test")
 def test():
 	return 'Test OK', 200 # status code
+
+@app.route("/stop_server")
+def stop():
+    os.kill(os.getpid(), signal.CTRL_C_EVENT)
+    return "Server stopped"
 
 @app.route('/users/get_user_data/<user_id>') #http://127.0.0.1:5001/users/get_user_data/1
 def get_user_data(user_id):

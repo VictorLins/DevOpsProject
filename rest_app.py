@@ -1,10 +1,19 @@
+import signal
+
 from flask import Flask, request
 from db_connector import get_user, update_user, add_user, delete_user
+import os
+import signal
 app = Flask(__name__)
 
 @app.route("/test")
 def test():
     return 'Test OK', 200 # status code
+
+@app.route("/stop_server")
+def stop():
+    os.kill(os.getpid(), signal.CTRL_C_EVENT)
+    return "Server stopped"
 
 @app.route('/users/<user_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def user(user_id):

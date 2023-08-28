@@ -16,12 +16,18 @@ pipeline {
             steps {
                 script {
                     if (checkOs() == 'Windows') {
-						def scriptOutput = bat(
+						def scriptOutput1 = bat(
 							script: 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe rest_app.py',
+							returnStatus: true
+						)
+
+
+						def scriptOutput2 = bat(
 							script: 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe web_app.py',
 							returnStatus: true
 						)
-						if (scriptOutput != 0) {
+
+						if (scriptOutput1 != 0 || scriptOutput2 != 0) {
 							currentBuild.result = 'FAILURE'
 						}
 					}

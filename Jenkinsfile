@@ -17,12 +17,12 @@ pipeline {
                 script {
                     if (checkOs() == 'Windows') {
 						def scriptOutput1 = bat(
-							script: 'C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe rest_app.py',
+							script: 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe rest_app.py',
 							returnStatus: true
 						)
 
 						def scriptOutput2 = bat(
-							script: 'C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe web_app.py',
+							script: 'start /min C:\\Users\\victo\\PycharmProjects\\pythonProject\\venv\\Scripts\\python.exe web_app.py',
 							returnStatus: true
 						)
 
